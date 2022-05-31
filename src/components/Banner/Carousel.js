@@ -49,9 +49,8 @@ const Carousel = () => {
    const items = trending.map((coin) => {
       let profit = coin.price_change_percentage_24h >= 0;
       return (
-         <div>
+         <div className = {classes.carouselItem}>
             <Link
-               className={classes.carouselItem}
                to={`/coins/${coin.id}`}
             >
                <img
@@ -60,16 +59,16 @@ const Carousel = () => {
                   height="80"
                   style={{ marginBotton: 10 }}></img>
             </Link>
-            <span style={{ userSelect: "none"}}>
-            {coin?.symbol}
-            &nbsp;
+            <div style={{ userSelect: "none"}}>
                <span>
-                  {profit && "+"} {coin?.price_change_percentage_24h.toFixed(2)}%
+                  {coin?.symbol} &nbsp;
+                  {profit && "+"}{coin?.price_change_percentage_24h.toFixed(2)}%
                </span>
-               <span style={{ fontSize: 22, fontWeight: 500}}>
-                  {symbol} {numberWithCommas(coin?.current_price.toFixed(2))}
+               <br></br>
+               <span style={{ fontSize: 22, fontWeight: 500, display: 'block', textAlign: 'center'}}>
+                  {symbol}{numberWithCommas(coin?.current_price.toFixed(2))}
                </span>
-            </span>
+            </div>
          </div>
       )
    })

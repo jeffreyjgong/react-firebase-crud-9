@@ -1,10 +1,11 @@
 import { Container, makeStyles, Typography } from '@material-ui/core';
 import React from 'react'
+// eslint-disable-next-line
 import Carousel from './Carousel';
 
 const useStyles = makeStyles(() => ({
    banner: {
-      backgroundImage: "url(./banner2.jpg)",
+      backgroundImage: "url(./testbg2.jpg)",
    },
    bannerContent: {
       height: 400,
@@ -38,7 +39,7 @@ const Banner = () => {
                      fontFamily: "Montserrat",
                   }}
                >
-                  Crypto Hunter
+                  Esurgi Web App
                </Typography>
                <Typography
                   variant="subtitle2"
@@ -48,10 +49,10 @@ const Banner = () => {
                      fontFamily: "Montserrat",
                   }}
                >
-                  Get all the info regarding your favorite Cryptocurrency
+                  Access Biostabilizer Patient Information
                </Typography>
             </div>
-            <Carousel/>
+            {/*<Carousel/>*/}
          </Container>
       </div>
    )

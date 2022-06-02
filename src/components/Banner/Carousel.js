@@ -57,11 +57,15 @@ const Carousel = () => {
                   src={coin?.image}
                   alt={coin.name}
                   height="80"
-                  style={{ marginBotton: 10 }}></img>
+                  style={{ marginBotton: 10, pointerEvents: 'none' }}></img>
             </Link>
             <div style={{ userSelect: "none"}}>
-               <span>
-                  {coin?.symbol} &nbsp;
+               {coin?.symbol} &nbsp;
+               <span 
+                  style={{
+                     color: profit > 0 ? "rgb(14, 203, 129)" : "red",
+                     fontWeight: 500,
+                  }}>
                   {profit && "+"}{coin?.price_change_percentage_24h.toFixed(2)}%
                </span>
                <br></br>

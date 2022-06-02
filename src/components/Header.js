@@ -2,6 +2,7 @@ import React from 'react'
 import { AppBar, Container, Toolbar, Typography, Select, MenuItem, makeStyles, createTheme, ThemeProvider } from "@material-ui/core"
 import { useNavigate } from "react-router-dom";
 import { CryptoState } from '../CryptoContext';
+import AuthModal from './Authentication/AuthModal';
 
 
 
@@ -49,6 +50,8 @@ const Header = () => {
                      <MenuItem value={"USD"}>Therapist</MenuItem>
                      <MenuItem value={"CNY"}>Patient</MenuItem>
                   </Select>
+
+                  <AuthModal />
                </Toolbar>
             </Container>
          </AppBar>

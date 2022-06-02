@@ -52,7 +52,7 @@ const Banner = () => {
                   Access Biostabilizer Patient Information
                </Typography>
             </div>
-            {/*<Carousel/>*/}
+            <Carousel/>
          </Container>
       </div>
    )

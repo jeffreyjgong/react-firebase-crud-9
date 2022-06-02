@@ -17,7 +17,7 @@ import {
   Paper,
 } from "@material-ui/core";
 import { useNavigate } from "react-router-dom";
-import { CryptoState } from "../CryptoContext";
+import { CryptoState } from "../PatientContext";
 
 export function numberWithCommas(x) {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -72,7 +72,7 @@ export default function CoinsTable() {
           variant="h4"
           style={{ margin: 18, fontFamily: "Montserrat" }}
         >
-          List of Patient Information
+          List of Patients
         </Typography>
         <TextField
           label="Search For a Patient..."
@@ -95,7 +95,7 @@ export default function CoinsTable() {
                         fontFamily: "Montserrat",
                       }}
                       key={head}
-                      align={head === "Coin" ? "left" : "right"}
+                      align={head === "Name" ? "left" : "right"}
                     >
                       {head}
                     </TableCell>

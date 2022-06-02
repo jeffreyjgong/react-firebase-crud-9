@@ -47,12 +47,13 @@ const Banner = () => {
                      color: "darkgrey",
                      textTransform: "capitalize",
                      fontFamily: "Montserrat",
+                     fontSize: 20,
                   }}
                >
                   Access Biostabilizer Patient Information
                </Typography>
             </div>
-            <Carousel/>
+            {/*<Carousel/>*/}
          </Container>
       </div>
    )

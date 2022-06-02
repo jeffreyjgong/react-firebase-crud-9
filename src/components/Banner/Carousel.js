@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { makeStyles } from "@material-ui/core"
 import { TrendingCoins } from '../../config/api';
-import { CryptoState } from "../../CryptoContext"
+import { CryptoState } from "../../PatientContext"
 import AliceCarousel from 'react-alice-carousel';
 import { Link } from 'react-router-dom';
 

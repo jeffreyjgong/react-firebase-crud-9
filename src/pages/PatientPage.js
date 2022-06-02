@@ -1,10 +1,10 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import { CryptoState } from '../CryptoContext'
+import { CryptoState } from '../PatientContext'
 import { SingleCoin } from '../config/api'
 import { makeStyles, Typography, LinearProgress } from '@material-ui/core'
-import CoinInfo from '../components/CoinInfo';
+import CoinInfo from '../components/PatientInfo';
 import ReactHtmlParser from "react-html-parser"
 import { numberWithCommas } from '../components/Banner/Carousel'
 

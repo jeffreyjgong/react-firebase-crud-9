@@ -2,8 +2,9 @@ import './App.css';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Header from "./components/Header";
 import Homepage from './pages/Homepage';
-import Coinpage from './pages/Coinpage';
+import PatientPage from './pages/PatientPage';
 import { makeStyles } from "@material-ui/core/styles";
+import Alert from './components/Alert';
 
 const useStyles = makeStyles({
   App: {
@@ -24,9 +25,10 @@ function App() {
         <Header />
         <Routes>
           <Route path='/' element={<Homepage />} />
-          <Route path='/coins/:id' element={<Coinpage />} />
+          <Route path='/coins/:id' element={<PatientPage />} />
         </Routes>
       </div>
+      <Alert />
     </BrowserRouter>
   );
 }

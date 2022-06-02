@@ -7,7 +7,9 @@ const Signup = ({ handleClose }) => {
    const [confirmPassword, setConfirmPassword] = useState("");
 
    const handleSubmit = () => {
-
+      if (password !== confirmPassword) {
+         
+      }
    }
 
    return (

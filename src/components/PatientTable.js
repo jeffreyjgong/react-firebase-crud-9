@@ -18,6 +18,9 @@ import {
 } from "@material-ui/core";
 import { useNavigate } from "react-router-dom";
 import { RoleState } from "../PatientContext";
+import { BsFillXCircleFill, BsFillPlusCircleFill } from "react-icons/bs";
+import { doc, setDoc } from "firebase/firestore";
+import { db } from "../firebase";
 
 export function numberWithCommas(x) {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -27,7 +30,7 @@ export default function PatientsTable() {
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
 
-  const { symbol, coins, loading } = RoleState();
+  const { symbol, coins, loading, patientlist, user, setAlert } = RoleState();
 
   const useStyles = makeStyles({
     row: {
@@ -65,6 +68,56 @@ export default function PatientsTable() {
     );
   };
 
+  const inPatientlist = (coin) => {
+    return patientlist.includes(coin?.id);
+  }
+  const addToPatientList = async (coin) => {
+    const patientRef = doc(db, "patientlist", user.uid);
+
+    try {
+      await setDoc(patientRef, 
+        {coins: patientlist ? [...patientlist, coin?.id] : [coin?.id]}
+      );
+
+      setAlert({
+        open: true,
+        message: `${coin.name} was added to patient list!`,
+        type: "success",
+      });
+    } catch (error) {
+      setAlert({
+        open: true,
+        message: error.message,
+        type: "error",
+      });
+    }
+  }
+
+  const removeFromPatientlist = async (coin) => {
+    const patientRef = doc(db, "patientlist", user.uid);
+
+    try {
+      await setDoc(
+        patientRef, 
+        {
+          coins: patientlist.filter((patient) => patient !== coin?.id)
+        },
+        { merge: "true" }
+      );
+
+      setAlert({
+        open: true,
+        message: `${coin.name} was removed from patient list!`,
+        type: "success",
+      });
+    } catch (error) {
+      setAlert({
+        open: true,
+        message: error.message,
+        type: "error",
+      });
+    }
+  }
   return (
     <ThemeProvider theme={darkTheme}>
       <Container style={{ textAlign: "center" }}>
@@ -87,7 +140,7 @@ export default function PatientsTable() {
             <Table aria-label="simple table">
               <TableHead style={{ backgroundColor: "rgb(0,113,115)" }}>
                 <TableRow>
-                  {["Name", "PT", "Last Monitored", "Location"].map((head) => (
+                  {["Name", "PT", "Last Monitored", "Location", "Add"].map((head) => (
                     <TableCell
                       style={{
                         color: "black",
@@ -110,7 +163,6 @@ export default function PatientsTable() {
                     const profit = row.price_change_percentage_24h > 0;
                     return (
                       <TableRow
-                        onClick={() => navigate(`/patients/${row.id}`)}
                         className={classes.row}
                         key={row.name}
                       >
@@ -121,6 +173,7 @@ export default function PatientsTable() {
                             display: "flex",
                             gap: 15,
                           }}
+                          onClick={() => navigate(`/patients/${row.id}`)}
                         >
                           <img
                             src={row?.image}
@@ -143,8 +196,10 @@ export default function PatientsTable() {
                               {row.name}
                             </span>
                           </div>
+                          
                         </TableCell>
-                        <TableCell align="right">
+                        
+                        <TableCell align="right" onClick={() => navigate(`/patients/${row.id}`)}>
                           {symbol}{" "}
                           {numberWithCommas(row.current_price.toFixed(2))}
                         </TableCell>
@@ -154,16 +209,39 @@ export default function PatientsTable() {
                             color: profit > 0 ? "rgb(14, 203, 129)" : "red",
                             fontWeight: 500,
                           }}
+                          onClick={() => navigate(`/patients/${row.id}`)}
                         >
                           {profit && "+"}
                           {row.price_change_percentage_24h.toFixed(2)}%
                         </TableCell>
-                        <TableCell align="right">
+                        <TableCell align="right" onClick={() => navigate(`/patients/${row.id}`)}>
                           {symbol}{" "}
                           {numberWithCommas(
                             row.market_cap.toString().slice(0, -6)
                           )}
                           M
+                        </TableCell>
+                        <TableCell align="right">
+                          {
+                            !inPatientlist(row) ? 
+                              <BsFillPlusCircleFill
+                                style={{
+                                  marginTop: "14px",
+                                  fontSize: 25,
+                                  color: "green",
+                                }}
+                                onClick={() => addToPatientList(row)}>
+                              </BsFillPlusCircleFill>
+                              :
+                              <BsFillXCircleFill
+                                style={{
+                                  marginTop: "14px",
+                                  fontSize: 25,
+                                  color: "red",
+                                }}
+                                onClick={() => removeFromPatientlist(row)}>                               
+                              </BsFillXCircleFill>
+                          }
                         </TableCell>
                       </TableRow>
                     );

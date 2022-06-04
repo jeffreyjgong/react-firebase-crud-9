@@ -226,7 +226,6 @@ export default function PatientsTable() {
                             !inPatientlist(row) ? 
                               <BsFillPlusCircleFill
                                 style={{
-                                  marginTop: "14px",
                                   fontSize: 25,
                                   color: "green",
                                 }}
@@ -235,7 +234,6 @@ export default function PatientsTable() {
                               :
                               <BsFillXCircleFill
                                 style={{
-                                  marginTop: "14px",
                                   fontSize: 25,
                                   color: "red",
                                 }}

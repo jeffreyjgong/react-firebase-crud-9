@@ -39,7 +39,7 @@ const Header = () => {
          <AppBar color='transparent' position='static'>
             <Container>
                <Toolbar>
-                  <Typography onClick={() => navigate('/home')} className={classes.title} variant='h6'>Biostabilizer Data</Typography>
+                  <Typography onClick={() => navigate('/home')} className={classes.title} variant='h6'>Esurgi Web Portal</Typography>
                   <Select variant="outlined" style={{
                   width: 100,
                   height: 40,

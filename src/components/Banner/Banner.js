@@ -8,7 +8,7 @@ const useStyles = makeStyles(() => ({
       backgroundImage: "url(./testbg2.jpg)",
    },
    bannerContent: {
-      height: 400,
+      height: 300,
       display: "flex",
       flexDirection: "column",
       paddingTop: 25,
@@ -39,7 +39,7 @@ const Banner = () => {
                      fontFamily: "Montserrat",
                   }}
                >
-                  Esurgi Web App
+                  Biostabilizer Data
                </Typography>
                <Typography
                   variant="subtitle2"

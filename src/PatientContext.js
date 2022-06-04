@@ -1,13 +1,14 @@
 import axios from 'axios';
 import { onAuthStateChanged } from 'firebase/auth';
+import { doc, onSnapshot } from 'firebase/firestore';
 import React from 'react'
 import { createContext, useContext, useState, useEffect } from 'react'
 import { CoinList } from './config/api';
-import { auth } from './firebase';
+import { auth, db } from './firebase';
 
-const Crypto = createContext()
+const Role = createContext()
 
-const CryptoContext = ({ children }) => {
+const RoleContext = ({ children }) => {
    const [currency, setCurrency] = useState("USD");
    const [symbol, setSymbol] = useState("$");
    const [coins, setCoins] = useState([]);
@@ -20,6 +21,27 @@ const CryptoContext = ({ children }) => {
       type: "success",
    });
 
+   const [patientlist, setPatientlist] = useState([]);
+
+   useEffect(() => {
+      if (user) {
+         const coinRef = doc(db, "patientlist", user.uid);
+
+         var unsubscribe = onSnapshot(coinRef, coin=> {
+            if (coin.exists()) {
+               setPatientlist(coin.data().coins);
+            } else {
+               console.log("No Items in Watchlist");
+            }
+         });
+         return () => {
+            unsubscribe();
+         }
+      }
+
+      
+   }, [user]);
+
    useEffect(() => {
       onAuthStateChanged(auth, user=> {
          if (user) setUser(user);
@@ -31,7 +53,7 @@ const CryptoContext = ({ children }) => {
       setLoading(true);
       const { data } = await axios.get(CoinList(currency));
   
-      //setCoins(data);
+      setCoins(data);
       setLoading(false);
     };
 
@@ -44,11 +66,11 @@ const CryptoContext = ({ children }) => {
    }, [currency])
 
 
-   return <Crypto.Provider value={{currency, symbol, setCurrency, coins, loading, alert, setAlert, fetchCoins, user}}>{children}</Crypto.Provider>
+   return <Role.Provider value={{currency, symbol, setCurrency, coins, loading, alert, setAlert, fetchCoins, user, patientlist}}>{children}</Role.Provider>
 }
 
-export default CryptoContext;
+export default RoleContext;
 
-export const CryptoState = () => {
-   return useContext(Crypto);
+export const RoleState = () => {
+   return useContext(Role);
 };

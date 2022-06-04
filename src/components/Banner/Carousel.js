@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { makeStyles } from "@material-ui/core"
 import { TrendingCoins } from '../../config/api';
-import { CryptoState } from "../../PatientContext"
+import { RoleState } from "../../PatientContext"
 import AliceCarousel from 'react-alice-carousel';
 import { Link } from 'react-router-dom';
 
@@ -31,7 +31,7 @@ const Carousel = () => {
    const [trending, setTrending] = useState([]);
    const classes = useStyles();
 
-   const { currency, symbol } = CryptoState();
+   const { currency, symbol } = RoleState();
    
    const FetchTrendingCoins = async () => {
       const { data } = await axios.get(TrendingCoins(currency))

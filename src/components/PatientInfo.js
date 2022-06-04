@@ -2,7 +2,7 @@ import { CircularProgress, createTheme, makeStyles, ThemeProvider } from '@mater
 import React, { useEffect, useState } from 'react'
 import { Line } from 'react-chartjs-2';
 import { HistoricalChart } from '../config/api';
-import { CryptoState } from '../PatientContext';
+import { RoleState } from '../PatientContext';
 import axios from "axios";
 import {
    Chart as ChartJS,
@@ -47,14 +47,14 @@ const useStyles = makeStyles((theme) => ({
    }
 }));
 
-const CoinInfo = ({ coin }) => {
+const PatientInfo = ({ patient }) => {
    const [historicData, setHistoricData] = useState();
    const [days, setDays] = useState(1);
 
-   const { currency } = CryptoState();
+   const { currency } = RoleState();
 
    const fetchHistoricData = async () => {
-      const { data } = await axios.get(HistoricalChart(coin.id, days, currency));
+      const { data } = await axios.get(HistoricalChart(patient.id, days, currency));
 
       setHistoricData(data.prices);
    };
@@ -90,8 +90,8 @@ const CoinInfo = ({ coin }) => {
                      <Line
                         data={{
                            labels: 
-                              historicData.map((coin) => {
-                                 let date = new Date(coin[0]);
+                              historicData.map((patient) => {
+                                 let date = new Date(patient[0]);
                                  let time = 
                                     date.getHours() > 12
                                        ? `${date.getHours() - 12}:${date.getMinutes()}PM`
@@ -101,7 +101,7 @@ const CoinInfo = ({ coin }) => {
 
                            datasets: [
                               {
-                                 data: historicData.map((coin) => coin[1]),
+                                 data: historicData.map((patient) => patient[1]),
                                  label: `Price ( Past ${days} Days) in ${currency}`,
                                  borderColor: "rgb(0,113,115)"
                               }
@@ -140,4 +140,4 @@ const CoinInfo = ({ coin }) => {
    )
 }
 
-export default CoinInfo
+export default PatientInfo

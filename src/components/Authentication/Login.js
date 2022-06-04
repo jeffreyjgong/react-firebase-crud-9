@@ -1,14 +1,14 @@
 import { Box, Button, TextField } from '@material-ui/core';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import React, { useState } from 'react'
-import { CryptoState } from '../../PatientContext';
+import { RoleState } from '../../PatientContext';
 import { auth } from '../../firebase';
 
 const Login = ({ handleClose }) => {
    const [ email, setEmail ] = useState("");
    const [ password, setPassword ] = useState("");
 
-   const { setAlert } = CryptoState();
+   const { setAlert } = RoleState();
 
    const handleSubmit = async () => {
       if (!email || !password) {

@@ -1,10 +1,13 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
-import { CryptoState } from '../../PatientContext';
+import { RoleState } from '../../PatientContext';
 import { Avatar, Button } from '@material-ui/core';
 import { signOut } from 'firebase/auth';
-import { auth } from '../../firebase';
+import { auth, db } from '../../firebase';
+import { numberWithCommas } from '../Banner/Carousel';
+import { AiFillDelete } from 'react-icons/ai';
+import { doc, setDoc } from 'firebase/firestore';
 
 const useStyles = makeStyles({
   container: {
@@ -48,6 +51,16 @@ const useStyles = makeStyles({
      alignItems: "center",
      gap: 12,
      overflowY: "scroll",
+  },
+  coin: {
+     padding: 10,
+     borderRadius: 5,
+     color: "black",
+     width: "100%",
+     display: "flex",
+     justifyContent: "space-between",
+     alignItems: "center",
+     boxShadow: "0 0 3px black"
   }
 });
 
@@ -57,7 +70,7 @@ export default function UserSidebar() {
     right: false,
   });
 
-  const { user, setAlert } = CryptoState();
+  const { user, setAlert, patientlist, coins, symbol } = RoleState();
   
 
   const toggleDrawer = (anchor, open) => (event) => {
@@ -67,6 +80,32 @@ export default function UserSidebar() {
 
     setState({ ...state, [anchor]: open });
   };
+
+  const removeFromPatientlist = async (coin) => {
+   const patientRef = doc(db, "patientlist", user.uid);
+
+   try {
+     await setDoc(
+       patientRef, 
+       {
+         coins: patientlist.filter((patient) => patient !== coin?.id)
+       },
+       { merge: "true" }
+     );
+
+     setAlert({
+       open: true,
+       message: `${coin.name} was removed from patient list!`,
+       type: "success",
+     });
+   } catch (error) {
+     setAlert({
+       open: true,
+       message: error.message,
+       type: "error",
+     });
+   }
+ }
 
    const logout = () => {
       signOut(auth);
@@ -117,6 +156,31 @@ export default function UserSidebar() {
                      <span style={{ fontSize: 15, textShadow: "0 0 5px black"}}>
                         Patient List
                      </span>
+                     {
+                        coins
+                           .filter(coin => patientlist.includes(coin.id))
+                           .map((coin) => {
+                              const profit = coin.price_change_percentage_24h > 0;
+                              return (
+                                 <div className={classes.coin}
+                                    style={{
+                                       backgroundColor: profit ? "rgb(102,255,102)" : "rgb(255,160,122)"
+                                    }}>
+                                    <span>{coin.name}</span>
+                                    <span style={{ display: "flex", gap: 8}}>
+                                       {symbol}{numberWithCommas(coin.current_price.toFixed(2))}
+                                       <AiFillDelete
+                                          style={{ cursor: "pointer"}}
+                                          fontSize="16"
+                                          onClick={() => removeFromPatientlist(coin)}
+                                       >
+
+                                       </AiFillDelete>
+                                    </span>
+                                 </div>
+                              )
+                           })
+                     }
                   </div>
                </div>
                <Button

@@ -9,7 +9,7 @@ import Login from './Login';
 import GoogleButton from 'react-google-button';
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { auth } from '../../firebase';
-import { CryptoState } from '../../PatientContext';
+import { RoleState } from '../../PatientContext';
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -40,7 +40,7 @@ export default function AuthModal() {
 
   const [value, setValue] = React.useState(0);
 
-  const { setAlert } = CryptoState();
+  const { setAlert } = RoleState();
 
   const handleChange = (event, newValue) => {
     setValue(newValue);

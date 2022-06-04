@@ -1,8 +1,8 @@
 import './App.css';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Header from "./components/Header";
 import Homepage from './pages/Homepage';
 import PatientPage from './pages/PatientPage';
+import LandingPage from './pages/LandingPage.js';
 import { makeStyles } from "@material-ui/core/styles";
 import Alert from './components/Alert';
 
@@ -22,10 +22,10 @@ function App() {
   return (
     <BrowserRouter>
       <div className={ classes.App}>
-        <Header />
         <Routes>
-          <Route path='/' element={<Homepage />} />
-          <Route path='/coins/:id' element={<PatientPage />} />
+          <Route path='/' element={<LandingPage />} />
+          <Route path='/home' element={<Homepage />} />
+          <Route path='/patients/:id' element={<PatientPage />} />
         </Routes>
       </div>
       <Alert />

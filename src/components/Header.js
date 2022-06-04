@@ -1,7 +1,7 @@
 import React from 'react'
 import { AppBar, Container, Toolbar, Typography, Select, MenuItem, makeStyles, createTheme, ThemeProvider } from "@material-ui/core"
 import { useNavigate } from "react-router-dom";
-import { CryptoState } from '../PatientContext';
+import { RoleState } from '../PatientContext';
 import AuthModal from './Authentication/AuthModal';
 import UserSidebar from './Authentication/UserSidebar';
 
@@ -23,7 +23,7 @@ const Header = () => {
 
    const navigate = useNavigate();
 
-   const { currency, setCurrency, user } = CryptoState();
+   const { currency, setCurrency, user } = RoleState();
 
    const darkTheme = createTheme({
       palette: {
@@ -39,7 +39,7 @@ const Header = () => {
          <AppBar color='transparent' position='static'>
             <Container>
                <Toolbar>
-                  <Typography onClick={() => navigate('/')} className={classes.title} variant='h6'>Biostabilizer Data</Typography>
+                  <Typography onClick={() => navigate('/home')} className={classes.title} variant='h6'>Biostabilizer Data</Typography>
                   <Select variant="outlined" style={{
                   width: 100,
                   height: 40,

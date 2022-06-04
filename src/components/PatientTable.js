@@ -17,17 +17,17 @@ import {
   Paper,
 } from "@material-ui/core";
 import { useNavigate } from "react-router-dom";
-import { CryptoState } from "../PatientContext";
+import { RoleState } from "../PatientContext";
 
 export function numberWithCommas(x) {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
-export default function CoinsTable() {
+export default function PatientsTable() {
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
 
-  const { symbol, coins, loading } = CryptoState();
+  const { symbol, coins, loading } = RoleState();
 
   const useStyles = makeStyles({
     row: {
@@ -110,7 +110,7 @@ export default function CoinsTable() {
                     const profit = row.price_change_percentage_24h > 0;
                     return (
                       <TableRow
-                        onClick={() => navigate(`/coins/${row.id}`)}
+                        onClick={() => navigate(`/patients/${row.id}`)}
                         className={classes.row}
                         key={row.name}
                       >

@@ -1,12 +1,10 @@
 const firebaseConfig = {
-  apiKey: "AIzaSyCVbTSHNpJZRfq4nMSRRTWuoX8JHbebEFg",
-  authDomain: "esurgiinc.firebaseapp.com",
-  databaseURL: "https://esurgiinc-default-rtdb.firebaseio.com",
-  projectId: "esurgiinc",
-  storageBucket: "esurgiinc.appspot.com",
-  messagingSenderId: "831263744254",
-  appId: "1:831263744254:web:3e9cb456ca84b7e44e85af",
-  measurementId: "G-79X4FD4Q2D"
+  apiKey: "AIzaSyCgFYLGLo5vFqqGxOrV01KBWjNzcDUdW7s",
+  authDomain: "biostabilizer-web-app.firebaseapp.com",
+  projectId: "biostabilizer-web-app",
+  storageBucket: "biostabilizer-web-app.appspot.com",
+  messagingSenderId: "700883265785",
+  appId: "1:700883265785:web:19d09979b82b81f5d95a28"
 };
 
 export default firebaseConfig;
